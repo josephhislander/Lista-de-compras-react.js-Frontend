@@ -1,0 +1,8 @@
+@import './base/base';
+@import './base/settings';
+
+//Components
+@import './components/auth';
+@import './components/list';
+@import './components/ui';
+@import '~@sweetalert2/themes/material-ui/material-ui.scss';

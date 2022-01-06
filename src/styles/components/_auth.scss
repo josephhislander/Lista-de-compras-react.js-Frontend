@@ -1,0 +1,75 @@
+.login-container{
+    background-image: url('../../assets/haciendoCompras.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+
+}
+
+.transparencia {
+    background-color: #000000d5;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.form-container{
+    border-radius: 1rem;
+}
+
+.bi-cart-check{
+    font-size: 5rem;
+}
+
+.router-container {
+    min-height: 250px;
+    max-height: 250px;
+
+}
+
+.button{
+    border-top: solid transparent .1rem;
+    border-left: solid transparent .1rem;
+    border-right: solid transparent .1rem;
+    border-bottom: solid $white .1rem;
+    border-top-left-radius: 0.5rem;
+    color: $primary;
+    padding: 0.5rem;
+    transition: all 0.2s ease-in;
+    text-decoration: none;
+
+    &:hover{
+        border: solid $white .1rem;
+        color: $white;
+        text-decoration: none;
+    }
+
+    &:focus {
+        border-top: solid $white .1rem;
+        border-left: solid $white .1rem;
+        border-right: solid $white .1rem;
+        border-bottom: solid transparent .1rem;
+    }
+}
+
+.google-blue{
+    color: $google-blue;
+    
+}
+
+.google-red{
+    color: $google-red;
+    
+}
+
+.google-yellow{
+    color: $google-yellow;
+    
+}
+
+.google-green{
+    color: $google-green;
+    
+}
