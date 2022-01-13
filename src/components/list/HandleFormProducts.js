@@ -23,7 +23,7 @@ export const HandleFormProducts = ({handleSubmit, activeTitle = 'List title', ac
         amountValue: 1
     });
     const {nameValue, amountValue, title} = inputValues;
-    console.log(activeList)
+
 
     const handleNewItem = () => {
 
@@ -37,17 +37,15 @@ export const HandleFormProducts = ({handleSubmit, activeTitle = 'List title', ac
         setProducts([
                 ...products, {
                     id: moment().format("HmsS"),
-                    name: nameValue,
-                    amount: amountValue,
-                    price: 0,
-                    itbms: 0,
-                    checked: false
+                    nombre: nameValue,
+                    cantidad: amountValue,
+                
                 }
         ])   
 
         reset();
 
-        dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
+        // dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
 
     }
 
@@ -65,7 +63,7 @@ export const HandleFormProducts = ({handleSubmit, activeTitle = 'List title', ac
         }
 
         handleSubmit( title, products, uid, name);
-
+        console.log(products);
         // Swal.fire(
         //     'Save!',
         //     'Your list has been created.',

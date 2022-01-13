@@ -1,7 +1,7 @@
 
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import {  eventStartNewList } from '../../action/listEvents';
+import {  eventNewList, eventStartNewList, eventStartNewProduct } from '../../action/listEvents';
 import { HandleFormProducts } from './HandleFormProducts';
 
 
@@ -17,8 +17,16 @@ export const NewList = () => {
                                     user: {
                                         uid:  uid ,
                                         name: name
-                                    }
-    }));
+                                    }}));
+
+        for( let i = 0; i <= products.length  ; i++){
+                dispatch(eventStartNewProduct(products[i]))
+        }
+                
+        // products.map(product => dispatch(eventStartNewProduct(product)))
+
+        // dispatch(eventStartNewProduct(products));  
+
         push("/list")
     }
 

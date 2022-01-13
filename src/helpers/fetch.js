@@ -33,7 +33,8 @@ const fetchConToken = ( endpoint, data = false, method = 'GET' ) => {
             method,
             headers: {
                 'x-token': token,
-                'user-id' : data.uid
+                'user-id' : data.uid,
+                'list-id': data.list_id
             }
         });
     // } if ( method === 'GET'  ) {

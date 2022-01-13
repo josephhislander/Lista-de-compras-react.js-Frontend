@@ -21,8 +21,8 @@ export const types = {
 
     eventStartNewProduct: '[event] Start New Product',
     eventNewProduct: '[event] New Product',
-    eventStartGetProducts: '[event] Start Get Product',
-    eventGetProducts: '[event] Get Product',
+    eventStartGetProducts: '[event] Start Get Products',
+    eventGetProducts: '[event] Get Products',
     eventDeleteProduct: '[event] Delete Product',
     eventNewActiveProduct: '[event] New Active Product',
     eventUpdateProductPrice: '[event] Update Product Price',

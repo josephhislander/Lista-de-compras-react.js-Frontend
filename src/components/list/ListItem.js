@@ -8,7 +8,7 @@ import { ModalCost } from './ModalCost';
 
 
 
-export const ListItem = ({name, id, products, amount, Product}) => {
+export const ListItem = ({nombre, id, products, cantidad, Product}) => {
 
     const [modalIsOpen, setIsOpen] = useState();
     // const [check, setCheck] = useState(false);
@@ -101,9 +101,9 @@ export const ListItem = ({name, id, products, amount, Product}) => {
                     } 
                 
             <label className=' ml-3' htmlFor={`flexCheck${id}`}  >
-                {name}  {
-                    (amount > 1)
-                    && 'x' + amount
+                {nombre}  {
+                    (cantidad > 1)
+                    && 'x' + cantidad
                 }
                 
             </label>
@@ -125,7 +125,7 @@ export const ListItem = ({name, id, products, amount, Product}) => {
 }
 
 ListItem.propTypes = {
-    name: PropTypes.string.isRequired,
+    nombre: PropTypes.string.isRequired,
     id: PropTypes.any.isRequired,
     products: PropTypes.array.isRequired,
 }

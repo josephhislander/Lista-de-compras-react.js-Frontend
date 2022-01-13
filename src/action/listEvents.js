@@ -4,15 +4,16 @@ import { fetchConToken } from "../helpers/fetch";
 import Swal from "sweetalert2";
 moment().format();
 
-export const eventStartNewList = (event) => {
+export const eventStartNewList = ({title, products, user}) => {
 
+    
     
     return async(dispatch) => {
 
         try {
             
-            const data = {nombre: event.title,
-                           uid: event.user.uid 
+            const data = {nombre: title,
+                           uid: user.uid 
                             };
         
             const resp = await fetchConToken('listas',data , 'POST');
@@ -29,6 +30,8 @@ export const eventStartNewList = (event) => {
 
             }
 
+            dispatch(eventNewList(title, products, body._id, user.uid))
+
             Swal.fire(
             'Save!',
             'Your list has been created.',
@@ -41,18 +44,20 @@ export const eventStartNewList = (event) => {
     }
 }
 
-//  const eventNewList = (title, products) => ({
-//     type: types.eventNewList,
-//     payload: 
-//         {   
-//             id: moment().format("HmsS")  ,
-//             title,
-//             Date: moment().format("D/MM/YYYY"),
-//             budget: 0,
-//             products,
-//             activeProduct: null
-//         }   
-// })
+const eventNewList = (nombre, productos, _id, usuario) => ({
+    type: types.eventNewList,
+    payload: 
+        {   
+            _id ,
+            estado: true,
+            productos,
+            presupuesto: 0,
+            nombre,
+            usuario,
+            fecha: moment().format("D/MM/YYYY"),
+
+        }   
+})
 
 export const eventStarGetList = (event) => {
 
@@ -164,7 +169,7 @@ export const eventStartNewProduct = (name, activeList, amount) => {
         cantidad: amount
         };
 
-        console.log(data);
+  
 
     return async(dispatch) => {
 
@@ -198,13 +203,13 @@ export const eventStartNewProduct = (name, activeList, amount) => {
     }
 }
 
-// const eventNewProduct = (activeList, nameValue, amountValue) => ({
+// const eventNewProduct = (activeList, nombre, cantidad) => ({
 //     type: types.eventNewProduct,
 //     payload: {
 //         id: activeList.id,
 //         list: {...activeList,
-//                     products:[ ...activeList.products ,
-//                    product: {id: moment().format("HmsS"),
+//                     productos:[ ...activeList.productos ,
+//                    {id: moment().format("HmsS"),
 //                     name: nameValue,
 //                     amount: amountValue,
 //                     price:0,
@@ -219,21 +224,24 @@ export const eventStartNewProduct = (name, activeList, amount) => {
 //                 }
 // })
 
-export const eventStartGetProducts = (event) => {
+export const eventStartGetProducts = (activeList) => {
 
-    
+    const { _id,  usuario} = activeList;
+
     return async(dispatch) => {
 
         try {
             
             const data = {
-                           uid: event
+                           uid: usuario,
+                           list_id: _id
                             };
         
-            const resp = await fetchConToken('listas',data, 'GET' );
+            const resp = await fetchConToken('productos',data, 'GET' );
             const body = await resp.json();
-            // console.log(body);
-            dispatch(eventGetList(body))
+            const productos = body.productos;
+            // console.log(productos);
+            dispatch(eventGetProducts(activeList, productos))
         } catch (error) {
             console.log(error)
             // const resp2 = await fetchConToken('')
@@ -242,6 +250,16 @@ export const eventStartGetProducts = (event) => {
         
     }
 }
+
+const eventGetProducts = (activeList, productos) => ({
+    type: types.eventGetProducts,
+    payload: {
+        id: activeList._id,
+        list: {...activeList,
+                    productos   
+                }}
+
+})
 
 export const eventDeleteProduct = (activeList, productId) => ({
     type: types.eventDeleteProduct,

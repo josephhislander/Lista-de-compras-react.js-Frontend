@@ -75,6 +75,13 @@ const initialState = {
 export const shoppingListReducer = ( state = initialState, action) => {
 
     switch (action.type) {
+
+          case types.eventNewList:
+            return {
+                ...state,
+                lists: [ ...state.lists, action.payload]
+            }
+
         case  types.eventGetList:
             return {
                 ...state,
@@ -139,10 +146,11 @@ export const shoppingListReducer = ( state = initialState, action) => {
             return {
                 ...state,
                 lists: state.lists.map( 
-                    list => list.id === action.payload.id
+                    list => list._id === action.payload.id
                         ? action.payload.list
                         : list
-                )
+                ),
+                activeList: {...action.payload.list}
             }
 
         case types.eventDeleteProduct:
