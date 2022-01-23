@@ -1,19 +1,22 @@
-import PropTypes from 'prop-types';
+
 import React from 'react'
+import { useSelector } from 'react-redux';
 import {ListItem} from './ListItem';
 
-export const ListProducts = ({products}) => {
+export const ListProducts = () => {
+
+    const {productos} = useSelector( state => state.shoppingListReducer.activeList );
 
    
     return (
         <div className='list-check-container min-h m-0 border-bottom-0'>
             {   
-                (products !== []) &&
-                products.map( product => (
-                <ListItem key={product.id}
+                (productos !== []) &&
+                productos.map( product => (
+                <ListItem key={product._id}
                             {...product}
                             Product={product}  
-                            products={products}
+                            products={productos}
                               />
                 ))
             }
@@ -21,6 +24,3 @@ export const ListProducts = ({products}) => {
     )
 }
 
-ListProducts.propTypes = {
-    products: PropTypes.array.isRequired,
-}

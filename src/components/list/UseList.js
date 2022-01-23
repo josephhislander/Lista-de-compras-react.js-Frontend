@@ -18,6 +18,7 @@ export const UseList = () => {
     const Budget = parseFloat(budget).toFixed(2)
 
     useEffect(() => {
+        
         (budget === 0) && setIsOpen(true);
     }, [budget])
 

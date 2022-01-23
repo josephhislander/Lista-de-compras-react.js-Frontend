@@ -2,73 +2,8 @@ import { types } from "../types/types";
 
 
 const initialState = {
-    lists: [
-        // { id: 15151,
-        //     title: 'Lista de compras super',
-        //     Date: '17/08/2021',
-        //     budget: 0, 
-        //     products: [
-        //         {
-        //             id:1,
-        //             name: 'Harina',
-        //             price: 1,
-        //             itbms: 0.5,
-        //             checked: false
-        //         }, 
-        //         {
-        //             id:2,
-        //             name: 'Azucar',
-        //             price: 1,
-        //             itbms: 0.5,
-        //             checked: false
-        //         },
-        //         {
-        //             id:3,
-        //             name: 'Aceite',
-        //             price: 1,
-        //             itbms: 0.5,
-        //             checked: false
-        //         }
-        //     ],
-        //     activeProduct: null
-        // }
-    ],
+    lists: [],
     activeList: {}
-    // { id: 15151,
-    //     title: 'Lista de compras super',
-    //     Date: '17/08/2021',
-    //     budget: 0,
-    //     products: [
-    //         {
-    //             id:1,
-    //             name: 'Harina',
-    //             price: 1,
-    //             itbms: 0.5,
-    //             checked: false
-    //         }, 
-    //         {
-    //             id:2,
-    //             name: 'Azucar',
-    //             price: 1,
-    //             itbms: 0.5,
-    //             checked: false
-    //         },
-    //         {
-    //             id:3,
-    //             name: 'Aceite',
-    //             price: 1,
-    //             itbms: 0.5,
-    //             checked: false
-    //         }
-    //     ],
-    //     activeProduct: {
-    //         id:3,
-    //         name: 'Aceite',
-    //         price: null,
-    //         itbms: null,
-    //         checked: false
-    //     }
-    // }
 }
 
 
@@ -79,7 +14,10 @@ export const shoppingListReducer = ( state = initialState, action) => {
           case types.eventNewList:
             return {
                 ...state,
-                lists: [ ...state.lists, action.payload]
+                lists: [ ...state.lists, action.payload],
+                activeList:  {
+                    ...action.payload
+                }
             }
 
         case  types.eventGetList:
@@ -93,7 +31,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
         case  types.eventDeleteList:
             return {
                 ...state,
-                lists: state.lists.filter( list => list !== action.payload)
+                lists: state.lists.filter( list => list.id !== action.payload)
             }
 
         case types.eventUpdateList:
@@ -104,7 +42,9 @@ export const shoppingListReducer = ( state = initialState, action) => {
                     list => list.id === action.payload.id
                         ? action.payload.list
                         : list
-                )
+                ),
+                activeList: action.payload.list
+
             }
 
         case types.eventNewActiveList:
@@ -128,19 +68,18 @@ export const shoppingListReducer = ( state = initialState, action) => {
             }
 
 
-        // case types.eventNewProduct:
-        //     return {
-        //         ...state, 
-        //         lists: state.lists.map( 
-        //             list => list.id === action.payload.id
-        //                     ?  { ...list, products : [...list.products, action.payload.product]}
-        //                     : list
-        //                 // ? action.payload.list
-        //                 // : list
-        //         ),
-        //         activeList: {...action.payload.activeList,
-        //             products: [...action.payload.activeList.products, action.payload.product] }
-        //     }
+        case types.eventNewProduct:
+            return {
+                ...state,
+                lists: state.lists.map( 
+                    list => list._id === action.payload.activeList._id
+                            ?  { ...list, productos : [...list.productos, action.payload.producto]}
+                            : list
+                ),
+                activeList: {...action.payload.activeList,
+                    productos: [...action.payload.activeList.productos, action.payload.producto] 
+                }
+            }
 
         case types.eventGetProducts:
             return {
@@ -157,7 +96,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
             return {
                 ...state,
                 lists: state.lists.map( 
-                    list => list.id === action.payload.id
+                    list => list._id === action.payload.id
                         ? action.payload.list
                         : list
                 ),

@@ -6,25 +6,25 @@ import { useGoogleLogout } from 'react-google-login'
 export const Navbar = () => {
   
 
-    const onLogoutSuccess = () => {
-        console.log('logout');
+    // const onLogoutSuccess = () => {
+    //     console.log('logout');
 
-      };
-      const onFailure = () => {
-        console.log('logout fail');
-      };
+    //   };
+    //   const onFailure = () => {
+    //     console.log('logout fail');
+    //   };
 
-      const { signOut } = useGoogleLogout({
-        clientId: '153363051251-ns1m9qcf2e3qrm2j0ho9ipcq18ta6eah.apps.googleusercontent.com',
-        onLogoutSuccess: onLogoutSuccess,
-        onFailure: onFailure,
-      });
+    //   const { signOut } = useGoogleLogout({
+    //     clientId: '153363051251-ns1m9qcf2e3qrm2j0ho9ipcq18ta6eah.apps.googleusercontent.com',
+    //     onLogoutSuccess: onLogoutSuccess,
+    //     onFailure: onFailure,
+    //   });
 
  
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        signOut()
+        // signOut()
         dispatch(startLogout());
     }
 

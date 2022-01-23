@@ -50,7 +50,9 @@ const fetchConToken = ( endpoint, data = false, method = 'GET' ) => {
             headers: {
                 'Content-type': 'application/json',
                 'x-token': token,
-                'user-id' : data.uid
+                'user-id' : data.uid,
+                'list-id': data.list_id,
+                'producto-id': data.product_id
             },
             body: JSON.stringify( data )
            

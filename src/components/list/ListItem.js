@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
-import { eventCheckProduct, eventDeleteProduct, eventNewActiveProduct } from '../../action/listEvents';
+import { eventCheckProduct, eventStartDeleteProducts, eventNewActiveProduct, eventStartDeleteProduct } from '../../action/listEvents';
 import { ModalCost } from './ModalCost';
 
 
 
-export const ListItem = ({nombre, id, products, cantidad, Product}) => {
+export const ListItem = ({nombre, _id, products, cantidad, Product}) => {
 
     const [modalIsOpen, setIsOpen] = useState();
     // const [check, setCheck] = useState(false);
@@ -24,7 +24,7 @@ export const ListItem = ({nombre, id, products, cantidad, Product}) => {
 
     // }, []);
 
-// console.log(activeList)
+console.log(_id)
 
     const handleDeleteItem = () => { 
 
@@ -38,10 +38,10 @@ export const ListItem = ({nombre, id, products, cantidad, Product}) => {
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
-                
-                if(location.pathname === "/list/useList") {
-                    dispatch( eventDeleteProduct(activeList, id))
-                }
+                console.log(activeList.usuario, _id)
+                // if(location.pathname === "/list/useList") {
+                    dispatch( eventStartDeleteProduct(_id, activeList ))
+                // }
         
                 // setProducts(
                 //     products.filter( product => product.id !== id)
@@ -93,14 +93,14 @@ export const ListItem = ({nombre, id, products, cantidad, Product}) => {
                 { (location.pathname === "/list/useList")
                     ? 
                     (Product.checked) ?
-                    <input className="form-check-input check " type="checkbox" value="Hola" id={`flexCheck${id}`}  onClick={handleCheckChange} defaultChecked />
+                    <input className="form-check-input check " type="checkbox" value="Hola" id={`flexCheck${_id}`}  onClick={handleCheckChange} defaultChecked />
                     
-                            : <input className="form-check-input check " type="checkbox" value="Hola" id={`flexCheck${id}`}  onClick={handleCheckChange} />
+                            : <input className="form-check-input check " type="checkbox" value="Hola" id={`flexCheck${_id}`}  onClick={handleCheckChange} />
 
-                    :<input className="form-check-input check " type="checkbox" value="" id={`flexCheck${id}`} disabled />
+                    :<input className="form-check-input check " type="checkbox" value="" id={`flexCheck${_id}`} disabled />
                     } 
                 
-            <label className=' ml-3' htmlFor={`flexCheck${id}`}  >
+            <label className=' ml-3' htmlFor={`flexCheck${_id}`}  >
                 {nombre}  {
                     (cantidad > 1)
                     && 'x' + cantidad
@@ -126,7 +126,7 @@ export const ListItem = ({nombre, id, products, cantidad, Product}) => {
 
 ListItem.propTypes = {
     nombre: PropTypes.string.isRequired,
-    id: PropTypes.any.isRequired,
+    // id: PropTypes.any.isRequired,
     products: PropTypes.array.isRequired,
 }
 

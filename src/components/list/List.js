@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch} from 'react-redux';
 import { useHistory } from 'react-router';
-import { eventNewActiveList, eventStartDeleteList } from '../../action/listEvents';
+import { eventNewActiveList, eventStartDeleteList, eventStartNewActivelist } from '../../action/listEvents';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 
@@ -10,6 +10,7 @@ export const List = (list) => {
     const date = moment(list.fecha).format("D/MM/YYYY")
     const { push} = useHistory();
     const dispatch = useDispatch();
+ 
 
     const handleDelete = () => {
 
@@ -36,13 +37,13 @@ export const List = (list) => {
     }
 
     const handleUpdate = () => {
-        dispatch( eventNewActiveList(list))
+        dispatch( eventStartNewActivelist(list))
         push('/list/updateList')
     }
 
 
     const handleActiveList = (list) => {
-        dispatch(eventNewActiveList(list))
+        dispatch(eventNewActiveList(list));
         push('list/useList')
     }
 

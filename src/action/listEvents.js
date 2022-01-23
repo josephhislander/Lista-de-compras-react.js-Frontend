@@ -4,33 +4,18 @@ import { fetchConToken } from "../helpers/fetch";
 import Swal from "sweetalert2";
 moment().format();
 
-export const eventStartNewList = ({title, products, user}) => {
+    export const eventStartNewList = (title = 'noName', user) => {
 
-    
-    
     return async(dispatch) => {
-
         try {
-            
             const data = {nombre: title,
-                           uid: user.uid 
+                           uid: user
                             };
         
             const resp = await fetchConToken('listas',data , 'POST');
             const body = await resp.json();
-            // console.log(body);
-                        
 
-            if( body.msg ){
-               return Swal.fire({
-                    icon: 'error',
-                    title: body.msg,
-                    text: 'Use other title for a new list'
-                })
-
-            }
-
-            dispatch(eventNewList(title, products, body._id, user.uid))
+            dispatch(eventNewList(body))
 
             Swal.fire(
             'Save!',
@@ -38,77 +23,56 @@ export const eventStartNewList = ({title, products, user}) => {
             'success'
           )
         } catch (error) {
-            console.log(error)
+            console.log(error + ' algo paso con el fetch')
             // const resp2 = await fetchConToken('')
         }
     }
 }
 
-const eventNewList = (nombre, productos, _id, usuario) => ({
+const eventNewList = (body) => ({
     type: types.eventNewList,
-    payload: 
-        {   
-            _id ,
-            estado: true,
-            productos,
-            presupuesto: 0,
-            nombre,
-            usuario,
-            fecha: moment().format("D/MM/YYYY"),
-
-        }   
+    payload:  body.lista  
 })
 
-export const eventStarGetList = (event) => {
+export const eventStarGetList = (uid) => {
 
-    
     return async(dispatch) => {
 
-        try {
-            
+        try {  
             const data = {
-                           uid: event
+                           uid
                             };
         
             const resp = await fetchConToken('listas',data, 'GET' );
             const body = await resp.json();
-            // console.log(body);
-            dispatch(eventGetList(body))
+            const listas = body.listas;
+            dispatch(eventGetList(listas));
+            
         } catch (error) {
             console.log(error)
-            // const resp2 = await fetchConToken('')
         }
-
-        
     }
 }
 
- const eventGetList = (data) => ({
+ const eventGetList = (listas) => ({
     type: types.eventGetList,
-    payload: data.listas
+    payload: listas
 })
 
 
 export const eventStartDeleteList = (id) => {
-
-    
     return async ( dispatch, getState ) => {
 
         const { uid} = getState().auth;
         try {
             const resp = await fetchConToken(`listas/${ id }`, {"uid": uid}, 'DELETE' );
             const body = await resp.json();
-            console.log(body)
             if ( body.estado === false ) {
-                console.log('entro lista en false')
-                // dispatch( eventNewActiveList(body))
                 dispatch( eventDeleteList(id) );
                 dispatch(eventStarGetList(uid));
             } else {
-                Swal.fire({icon:'error', title: body.msg, text:'error  Test'});
+                Swal.fire({icon:'error', title: body.msg, text:'error fetch'});
             }
-
-
         } catch (error) {
             console.log(error)
         }
@@ -122,39 +86,45 @@ const eventDeleteList = (id) => ({
 })
 
 
-export const eventStartUpdateList = (activeList, title, products) => {
+export const eventStartUpdateList = (activeList, activeTitle, productos) => {
   
-    const data = {nombre: title, products, uid: activeList.usuario};
-    console.log(data);
+    const data = {nombre: activeTitle, uid: activeList.usuario};
     return async(dispatch) => {
         try {
             const resp = await fetchConToken(`listas/${activeList._id}`, data, 'PUT')
-
             const body = await resp.json();
-            console.log(body);
+            dispatch(eventUpdateList(body.lista, productos))
         } catch (error) {
             console.log(error)
         }
     }
 }
 
-const eventUpdateList = (activeList,title,products) => ({
+const eventUpdateList = (lista,productos) => ({
     
     type: types.eventUpdateList,
-
     payload:{ 
-        id: activeList.id,
+        id: lista._id,
         list: {
-            ...activeList,
-            title,
-            products
-        // id: activeList.id,
-        // title,
-        // Date: activeList.Date,
-        // products,
-        // activeProduct: null
+            ...lista,
+            productos
     }}
 })
+
+
+export const eventStartNewActivelist = (lista) => {
+
+    return async(dispatch) => {
+        try {
+            dispatch(eventNewActiveList(lista))
+            const productos = await dispatch(eventStartGetProducts(lista))
+            console.log(productos)
+        } catch (error) {
+            
+        }
+    }
+
+}
 
 export const eventNewActiveList = ( list) => ({
     type: types.eventNewActiveList,
@@ -164,92 +134,59 @@ export const eventNewActiveList = ( list) => ({
 
 export const eventStartNewProduct = (name, activeList, amount) => {
 
-    const data = {  nombre: name,
-        lista: activeList,
-        cantidad: amount
+    const data = {  
+        nombre: name,
+        cantidad: amount,
+        lista: activeList
         };
 
-  
-
     return async(dispatch) => {
 
         try {
-            
-           
             const resp = await fetchConToken('productos',data , 'POST');
             const body = await resp.json();
-            console.log(body);
+            const producto = body.producto;
+            dispatch(eventNewProduct(producto, activeList))
+        } catch (error) {
+            console.log(error)
+            // const resp2 = await fetchConToken('')
+        }
+    }
+}
+
+const eventNewProduct = (producto, activeList) => ({
+    type: types.eventNewProduct,
+    payload: {
+        activeList,
+        producto
+            }
+})
+
+export const eventStartGetProducts = ( listas) => {
+
+    return async(dispatch) => { 
+                                try {
+            
+                    const data =    {
+                        'uid': listas.usuario,
+                        'list_id': listas._id,
                         
-
-            // if( body.msg ){
-            //    return Swal.fire({
-            //         icon: 'error',
-            //         title: body.msg,
-            //         text: 'Use other title for a new list'
-            //     })
-
-            // }
-            // dispatch(eventNewProduct(name, activeList, amount))
-
-            Swal.fire(
-            'Save!',
-            'Your product has been add.',
-            'success'
-          )
-        } catch (error) {
-            console.log(error)
-            // const resp2 = await fetchConToken('')
-        }
-    }
-}
-
-// const eventNewProduct = (activeList, nombre, cantidad) => ({
-//     type: types.eventNewProduct,
-//     payload: {
-//         id: activeList.id,
-//         list: {...activeList,
-//                     productos:[ ...activeList.productos ,
-//                    {id: moment().format("HmsS"),
-//                     name: nameValue,
-//                     amount: amountValue,
-//                     price:0,
-//                     itbms:0,
-//                     checked: false}
-//                 ]
-//                 },
+                    };
                 
-//                 activeList
-            
-
-//                 }
-// })
-
-export const eventStartGetProducts = (activeList) => {
-
-    const { _id,  usuario} = activeList;
-
-    return async(dispatch) => {
-
-        try {
-            
-            const data = {
-                           uid: usuario,
-                           list_id: _id
-                            };
-        
-            const resp = await fetchConToken('productos',data, 'GET' );
-            const body = await resp.json();
-            const productos = body.productos;
-            // console.log(productos);
-            dispatch(eventGetProducts(activeList, productos))
-        } catch (error) {
-            console.log(error)
-            // const resp2 = await fetchConToken('')
+                    const resp = await fetchConToken('productos',data, 'GET' );
+                    const body = await resp.json();
+                    console.log(body.productos);
+                    const productos = body.productos;
+                    // return productos;
+                    console.log(productos);
+                    dispatch(eventGetProducts(listas, productos))
+                } catch (error) {
+                    console.log(error)
+                }
         }
 
-        
-    }
-}
+    } 
+    
 
 const eventGetProducts = (activeList, productos) => ({
     type: types.eventGetProducts,
@@ -261,14 +198,89 @@ const eventGetProducts = (activeList, productos) => ({
 
 })
 
-export const eventDeleteProduct = (activeList, productId) => ({
+
+export const eventStartDeleteProduct = ( productId, activeList) => {
+   
+
+    console.log(activeList, productId)
+    const data = {
+        'uid': activeList.usuario,
+        'product_id': productId, 
+    }
+
+    return async(dispatch) => {
+       
+        
+            try {
+                const resp = await fetchConToken(`productos/product`, data, 'DELETE' );
+                const body = await resp.json();
+                console.log(body);
+                // if ( body.msg === 'Eliminados') {
+                //     console.log('Eliminados')
+                //     // dispatch( eventNewActiveList(body))
+                    dispatch( eventDeleteProduct(productId, activeList) );
+
+                // } else {
+                //     Swal.fire({icon:'error', title: body.msg, text:'error  Test'});
+                // }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+}
+
+
+const eventDeleteProduct = (productId, activeList) => ({
     type: types.eventDeleteProduct,
     payload:  {
-        id: activeList.id,
+        id: activeList._id,
         list: {...activeList,
-                    products: activeList.products.filter( product => product.id !== productId)     
+                    productos: activeList.productos.filter( producto => producto._id !== productId)     
                 }}
 })
+
+
+
+export const eventStartDeleteProducts = ({_id, usuario}) => {
+
+    console.log(_id, usuario)
+    const data = {
+        'uid': usuario,
+        'list_id': _id, 
+    }
+
+    return async(dispatch) => {
+       
+        
+            try {
+                const resp = await fetchConToken(`productos`, data, 'DELETE' );
+                const body = await resp.json();
+                console.log(body);
+                // if ( body.msg === 'Eliminados') {
+                //     console.log('Eliminados')
+                //     // dispatch( eventNewActiveList(body))
+                //     // dispatch( eventDeleteProducts(id) );
+
+                // } else {
+                //     Swal.fire({icon:'error', title: body.msg, text:'error  Test'});
+                // }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+// const eventDeleteProducts = () => ({
+//     type: types.eventDeleteProduct,
+//     payload:  {
+//         id: activeList.id,
+//         list: {...activeList,
+//                     products: []  
+//                 }}
+// })
 
 export const eventNewActiveProduct = (activeList, Product) => ({
     type: types.eventNewActiveProduct,

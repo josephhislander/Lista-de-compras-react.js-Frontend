@@ -23,9 +23,17 @@ export const AppRouter = () => {
 
     useEffect(() => {
     
-        dispatch( startChecking());
+        
+    
+            dispatch( startChecking());
+            // dispatch(eventStarGetList(uid,lists,activeList));
+        
+    
+     
       
     }, [dispatch])
+
+
 
     if(checking) {
         return <h5>Espere...</h5>

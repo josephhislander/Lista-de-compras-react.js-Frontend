@@ -1,13 +1,13 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { eventNewProduct } from '../../action/listEvents';
+// import { eventNewProduct } from '../../action/listEvents';
 import { useForm } from '../../hooks/useForm';
 
 export const InputsAddItem = () => {
 
-    const {activeList} = useSelector( state => state.shoppingListReducer );
-    const dispatch = useDispatch();
+    // const {activeList} = useSelector( state => state.shoppingListReducer );
+    // const dispatch = useDispatch();
 
     const  [inputValues, handleInputChange, reset] = useForm({
         title: 'activeTitle',

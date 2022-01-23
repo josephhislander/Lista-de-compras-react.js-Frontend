@@ -1,8 +1,7 @@
 import React from 'react'
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { eventStartGetProducts, eventStartUpdateList} from '../../action/listEvents';
+import { eventStartUpdateList} from '../../action/listEvents';
 import { HandleFormProducts } from './HandleFormProducts';
 
 export const UpdateList = () => {
@@ -12,15 +11,19 @@ export const UpdateList = () => {
     const { push } = useHistory()
     
     
-    useEffect(() => {
-        dispatch(eventStartGetProducts(activeList ))
+    // useEffect(() => {
         
-    }, [])
+        
+        
+    // },[])
     
+    // const  Getproductos = dispatch(eventStartGetProducts(activeList ));
+
     const { nombre: activeTitle, productos } = activeList;
-    console.log(productos);
+//  console.log(Getproductos);
     
-    const handleSubmit = (title, products) => {
+
+    const handleSubmit = (activeList, title, products) => {
         dispatch(eventStartUpdateList(activeList, title, products));
         push("/list")
     }

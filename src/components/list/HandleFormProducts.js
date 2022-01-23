@@ -1,28 +1,33 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import Swal from 'sweetalert2'
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { eventStartNewProduct } from '../../action/listEvents';
-import { ListProducts } from './ListProducts';
 import {useForm} from '../../hooks/useForm';
-import { InputsAddItem } from './InputsAddItem';
+import { eventStartDeleteList, eventStartDeleteProducts,  eventStartNewProduct } from '../../action/listEvents';
+import { ListProducts } from './ListProducts';
+
 moment().format();
 
-export const HandleFormProducts = ({handleSubmit, activeTitle = 'List title', activeProducts = []}) => {
+export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeTitle = 'List title', activeProducts = []}) => {
 
     const dispatch = useDispatch();
-    const {uid, name} = useSelector( state => state.auth );
+    const {uid} = useSelector( state => state.auth );
     const {activeList} = useSelector( state => state.shoppingListReducer );
-    const { push } = useHistory()
-    const [products, setProducts] = useState(activeProducts)
+    const { push, location} = useHistory()
+    const [products, setProducts] = useState([])
     const  [inputValues, handleInputChange, reset] = useForm({
         title: '',
         nameValue: '',
         amountValue: 1
     });
     const {nameValue, amountValue, title} = inputValues;
+
+    useEffect(() => {
+         (location.pathname === "/list/newList")&&    
+         handleNewList(uid)
+    }, [])
 
 
     const handleNewItem = () => {
@@ -45,12 +50,40 @@ export const HandleFormProducts = ({handleSubmit, activeTitle = 'List title', ac
 
         reset();
 
-        // dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
+        dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
 
     }
 
     const handleBack = () => {
-        push('/list')
+
+        if(location.pathname === "/list/newList"){
+              Swal.fire({
+                title: 'Are you sure?',
+                text: "do you want delete this list?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#81DFDD',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(eventStartDeleteList(activeList._id));
+                    dispatch(eventStartDeleteProducts(activeList));
+                  Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  )
+                  push('/list')
+                }
+              })
+        } else {
+            push('/list')
+        }
+        
+
+
+        
     }
 
     const handleSave = () => {
@@ -62,8 +95,9 @@ export const HandleFormProducts = ({handleSubmit, activeTitle = 'List title', ac
               })
         }
 
-        handleSubmit( title, products, uid, name);
-        console.log(products);
+        console.log(title);
+        handleSubmit( activeList, title, uid,products);
+      
         // Swal.fire(
         //     'Save!',
         //     'Your list has been created.',
@@ -158,7 +192,7 @@ export const HandleFormProducts = ({handleSubmit, activeTitle = 'List title', ac
 }
 
 HandleFormProducts.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
+    // handleSubmit: PropTypes.func.isRequired,
     activeTitle: PropTypes.string,
     activeProducts: PropTypes.array
 }
