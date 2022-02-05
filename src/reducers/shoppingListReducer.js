@@ -31,7 +31,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
         case  types.eventDeleteList:
             return {
                 ...state,
-                lists: state.lists.filter( list => list.id !== action.payload)
+                lists: state.lists.filter( list => list._id !== action.payload.id)
             }
 
         case types.eventUpdateList:
@@ -39,7 +39,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
                 
                 ...state, 
                 lists: state.lists.map( 
-                    list => list.id === action.payload.id
+                    list => list._id === action.payload.id
                         ? action.payload.list
                         : list
                 ),
@@ -60,7 +60,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
             return {
                 ...state,
                 lists: state.lists.map(
-                    list => list.id === action.payload.id
+                    list => list._id === action.payload.id
                         ? action.payload.list
                         : list
                 ),
@@ -107,7 +107,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
             return {
                 ...state,
                 lists: state.lists.map(
-                    list => list.id === action.payload.id
+                    list => list._id === action.payload.id
                         ? action.payload.list
                         : list
                 
@@ -120,7 +120,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
             return {
                 ...state,
                 lists: state.lists.map( 
-                    list => list.id === action.payload.id
+                    list => list._id === action.payload.id
                         ? action.payload.list
                         : list
                 ),
@@ -131,7 +131,7 @@ export const shoppingListReducer = ( state = initialState, action) => {
            return {
                 ...state,
                 lists: state.lists.map( 
-                    list => list.id === action.payload.id
+                    list => list._id === action.payload.id
                         ? action.payload.list
                         : list
                 ),

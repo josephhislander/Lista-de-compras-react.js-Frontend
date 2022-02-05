@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { eventUpdateProductPrice } from '../../action/listEvents';
+import { eventStartCheckProduct, eventStartUpdateProductPrice, eventUpdateProductPrice } from '../../action/listEvents';
 import { useForm } from '../../hooks/useForm';
 
 
@@ -23,7 +23,7 @@ const customStyles = {
   Modal.setAppElement('#root');
   
 
-export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product }) => {
+export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product, checkId }) => {
 
     const {activeList} = useSelector( state => state.shoppingListReducer );
     const dispatch = useDispatch();
@@ -43,15 +43,32 @@ export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product }) => {
 
     const handleSavePrice = () => {
 
-          closeModal()
-          setIsOpen(true)
+
+      // console.log(Cost, itbms)
+      //     closeModal()
+      //     setIsOpen(true)
      
 
-      dispatch(eventUpdateProductPrice(activeList, Product, Cost, itbms))
+      dispatch(eventStartUpdateProductPrice(activeList, Product, Cost, itbms))
 
 
       closeModal()
       
+    }
+
+    const handleBack = () => {
+
+      
+      
+
+     let checkBox = document.getElementById(checkId);
+      console.log(checkBox.checked);
+
+      dispatch( eventStartCheckProduct(activeList, Product));
+      closeModal()
+
+      checkBox.checked = false;
+
     }
 
     return (
@@ -61,6 +78,7 @@ export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product }) => {
       onRequestClose={closeModal}
       style={customStyles}
       contentLabel="Example Modal"
+      shouldCloseOnOverlayClick={false}
     >
  
           <div className="row g-3 d-flex justify-content-around  mb-3">
@@ -127,12 +145,21 @@ export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product }) => {
         </div>
 
         <div className="footer d-flex justify-content-center">
+            <button className='btn btn-success fs-1 mr-2'
+            onClick={handleBack}
+            // id="cancelBtn"
+           >
+            Back
+           </button>
+
            <button className='btn btn-success fs-1'
             onClick={handleSavePrice}
             id="cancelBtn"
            >
             Save  
            </button>
+
+          
         </div>
     </Modal>
 

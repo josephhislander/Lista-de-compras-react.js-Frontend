@@ -34,18 +34,9 @@ export const startRegister = ( nombre, correo, password, password2, rol = 'USER_
         
         const resp = await fetchSinToken('usuarios', {nombre,correo, password, password2, rol}, 'POST');
         const body = await resp.json();
-
-        console.log(body);
-
-        if( body.ok) {
-            localStorage.setItem('token', body.token);
-            localStorage.setItem('token-init-date', new Date().getTime());
-
-            dispatch( login({
-                uid: body.id,
-                name: body.usuario.nombre
-            }))
-
+        
+        if( body.msg === 'Creado') {
+            dispatch(startLogin(correo, password));
         } else {
             Swal.fire('Error', body.errors[0].msg, 'error')
         }

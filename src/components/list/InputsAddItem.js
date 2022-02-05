@@ -1,13 +1,13 @@
 import React from 'react'
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-// import { eventNewProduct } from '../../action/listEvents';
+import { eventStartNewProduct } from '../../action/listEvents';
 import { useForm } from '../../hooks/useForm';
 
 export const InputsAddItem = () => {
 
-    // const {activeList} = useSelector( state => state.shoppingListReducer );
-    // const dispatch = useDispatch();
+    const {activeList} = useSelector( state => state.shoppingListReducer );
+    const dispatch = useDispatch();
 
     const  [inputValues, handleInputChange, reset] = useForm({
         title: 'activeTitle',
@@ -27,7 +27,7 @@ export const InputsAddItem = () => {
         } 
     }
 
-    const handleNewItem = () => {
+    const handleNewItem = async() => {
 
         if( nameValue === '') {
             return Swal.fire({
@@ -38,7 +38,8 @@ export const InputsAddItem = () => {
 
         // console.log('hola mundo');
         // console.log(nameValue, activeList._id,amount);
-        
+        await dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
+
 
         // dispatch( eventNewProduct(activeList, nameValue, amountValue))
 

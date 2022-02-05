@@ -22,20 +22,21 @@ export const LoginWithGoogle = () => {
     })
       .then((resp) => resp.json())
       .then((resp) => {
-
+        localStorage.setItem("email", resp.usuario.correo);
+        localStorage.setItem('token', resp.token);
+        localStorage.setItem('token-init-date', new Date().getTime());
         dispatch(
           login({
             uid: resp.usuario.uid,
             name: resp.usuario.nombre,
           })
         );
-        localStorage.setItem("email", resp.usuario.correo);
       })
       .catch(console.warn);
   }
 
   return (
-    <div className=" mt-5 auth__social-networks ">
+    <div className=" mt-5 text-center auth__social-networks ">
       <GoogleLogin
         clientId="153363051251-ns1m9qcf2e3qrm2j0ho9ipcq18ta6eah.apps.googleusercontent.com"
         buttonText="Login"

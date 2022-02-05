@@ -17,6 +17,7 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
     const {activeList} = useSelector( state => state.shoppingListReducer );
     const { push, location} = useHistory()
     const [products, setProducts] = useState([])
+    const { nombre} = activeList;
     const  [inputValues, handleInputChange, reset] = useForm({
         title: '',
         nameValue: '',
@@ -24,13 +25,14 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
     });
     const {nameValue, amountValue, title} = inputValues;
 
+
     useEffect(() => {
          (location.pathname === "/list/newList")&&    
          handleNewList(uid)
     }, [])
 
 
-    const handleNewItem = () => {
+    const handleNewItem = async() => {
 
         if( nameValue === '') {
             return Swal.fire({
@@ -39,18 +41,9 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
               })
         }
       
-        setProducts([
-                ...products, {
-                    id: moment().format("HmsS"),
-                    nombre: nameValue,
-                    cantidad: amountValue,
-                
-                }
-        ])   
+        await dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
 
         reset();
-
-        dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
 
     }
 
@@ -86,7 +79,9 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
         
     }
 
-    const handleSave = () => {
+    const handleSave = ({target}) => {
+        
+        target.focus();
 
         if(title === ''){
             return Swal.fire({
@@ -113,9 +108,22 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
     const  handleInputAmountBlur = () => {
         if ( amountValue === '') {
             
-            reset( nameValue, 1)
+            reset( nameValue)
         } 
     }
+
+    // const handleInputTitleFocus = () => {
+    //     reset( '',  '','' , '')
+    // }
+
+    // const  handleInputTitleBlur = () => {
+    //     if ( title === '') {
+            
+    //         reset( '', '', '', nombre)
+    //     } 
+    // }
+
+ 
 
     return (
              <form className='m-2'>
@@ -124,8 +132,10 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
                             className='form-control fs-4 border-success text-success'
                             name='title'
                             onChange={handleInputChange}
+                            // onBlur={handleInputTitleBlur}
+                            // onFocus={handleInputTitleFocus}
                             type='text'
-                            placeholder={activeTitle}
+                            placeholder= 'Title'
                             value={title}
                         ></input>
                     </div>

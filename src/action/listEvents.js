@@ -9,11 +9,15 @@ moment().format();
     return async(dispatch) => {
         try {
             const data = {nombre: title,
-                           uid: user
+                           uid: user,
+                           presupuesto: 1
+                        
                             };
         
             const resp = await fetchConToken('listas',data , 'POST');
             const body = await resp.json();
+
+            // console.log(body);
 
             dispatch(eventNewList(body))
 
@@ -88,11 +92,14 @@ const eventDeleteList = (id) => ({
 
 export const eventStartUpdateList = (activeList, activeTitle, productos) => {
   
-    const data = {nombre: activeTitle, uid: activeList.usuario};
+    const data = {nombre: activeTitle, uid: activeList.usuario, presupuesto : 0};
+
     return async(dispatch) => {
         try {
             const resp = await fetchConToken(`listas/${activeList._id}`, data, 'PUT')
             const body = await resp.json();
+
+            console.log(body);
             dispatch(eventUpdateList(body.lista, productos))
         } catch (error) {
             console.log(error)
@@ -258,15 +265,6 @@ export const eventStartDeleteProducts = ({_id, usuario}) => {
                 const resp = await fetchConToken(`productos`, data, 'DELETE' );
                 const body = await resp.json();
                 console.log(body);
-                // if ( body.msg === 'Eliminados') {
-                //     console.log('Eliminados')
-                //     // dispatch( eventNewActiveList(body))
-                //     // dispatch( eventDeleteProducts(id) );
-
-                // } else {
-                //     Swal.fire({icon:'error', title: body.msg, text:'error  Test'});
-                // }
-
         } catch (error) {
             console.log(error)
         }
@@ -292,25 +290,43 @@ export const eventNewActiveProduct = (activeList, Product) => ({
             }
 })
 
-export const eventUpdateProductPrice = (activeList, Product, cost, itbms) => ({
+const eventUpdateProductPrice = (activeList, Product, cost, itbms) => ({
     type: types.eventUpdateProductPrice,
     payload: {
-        id: activeList.id,
+        id: activeList._id,
         list: {...activeList,
-                    products: activeList.products.map( product => (product.id === Product.id)
+                    productos: activeList.productos.map( product => (product._id === Product._id)
                     ? {...Product,
-                        price: cost,
-                        itbms: itbms
+                        precio: cost,
+                        impuesto: itbms
                     }
                     :product
                     ),
 
-                    activeProduct: {...Product,
-                        price: cost,
-                        itbms: itbms
-                    }
+                    // activeProduct: {...Product,
+                    //     precio: cost,
+                    //     impuesto: itbms
+                    // }
                 }}
 })
+
+
+export const eventStartUpdateProductPrice = (activeList, Product, cost =0, itbms= 0) => {
+
+    const data = { uid: activeList.usuario, precio: cost, impuesto: itbms};
+
+    return async(dispatch) => {
+        try {
+            const resp = await fetchConToken(`productos/${Product._id}`, data, 'PUT')
+            const body = await resp.json();
+
+            console.log(body);
+            dispatch(eventUpdateProductPrice(activeList, Product, cost, itbms  ))
+        } catch (error) {
+            console.log(error)
+        }
+    }  
+}
 
 
 export const eventStartUpdateListBudge = (activeList, Budget) => {
@@ -345,20 +361,40 @@ export const eventUpdateListBudge = (activeList, Budget) => ({
 
 })
 
-export const eventCheckProduct = (activeList, Product, check) => ({
+
+export const eventStartCheckProduct = (activeList,  Product, check = false) => {
+
+
+    const data = { uid: activeList.usuario, checked: check};
+
+    return async(dispatch) => {
+        try {
+            const resp = await fetchConToken(`productos/${Product._id}`, data, 'PUT')
+            const body = await resp.json();
+
+            console.log(body);
+            dispatch(eventCheckProduct(activeList, Product, check   ))
+        } catch (error) {
+            console.log(error)
+        }
+    }   
+}
+
+
+const eventCheckProduct = (activeList, Product, check) => ({
     type: types.eventCheckProduct,
     payload: {
-        id: activeList.id,
+        id: activeList._id,
         list: {...activeList,
-                    products: activeList.products.map( product => (product.id === Product.id)
+                    productos: activeList.productos.map( product => (product._id === Product._id)
                     ? {...Product,
                         checked: check
                     }
                     :product
                     ),
-                    activeProduct: {...Product,
-                        checked: check
-                    }
+                    // activeProduct: {...Product,
+                    //     checked: check
+                    // }
                 }}
 })
 

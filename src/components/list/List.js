@@ -43,7 +43,8 @@ export const List = (list) => {
 
 
     const handleActiveList = (list) => {
-        dispatch(eventNewActiveList(list));
+      dispatch( eventStartNewActivelist(list))
+        // dispatch(eventNewActiveList(list));
         push('list/useList')
     }
 

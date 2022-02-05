@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
-import { eventCheckProduct, eventStartDeleteProducts, eventNewActiveProduct, eventStartDeleteProduct } from '../../action/listEvents';
+import { eventCheckProduct, eventStartDeleteProducts, eventNewActiveProduct, eventStartDeleteProduct, eventStartCheckProduct, eventStartUpdateProductPrice } from '../../action/listEvents';
 import { ModalCost } from './ModalCost';
 
 
@@ -16,8 +16,9 @@ export const ListItem = ({nombre, _id, products, cantidad, Product}) => {
     const dispatch = useDispatch()
     const {location} = useHistory();
     // const {activeProduct} = activeList;
+    let {precio, impuesto} = Product;
 
-
+    const checkId = `flexCheck${_id}`;
     // useEffect(() => {
 
     //     if(product.checked) 
@@ -60,19 +61,34 @@ console.log(_id)
 
 
     const handleCheckChange =  (e) => {
-     
+      // (Product.precio = 0)  && (Product.impuesto = 0)
+      // console.log(e.target)
+      // if( e.target.checked === true && precio === 0  &&  impuesto === 0) {
+        
+        
+      //   e.target.checked = false;
+      // }
+
+      const check = e.target.checked;
       // setIsOpen(true);
       
-      dispatch( eventNewActiveProduct(activeList, Product));
+      // dispatch( eventNewActiveProduct(activeList, Product));
       
       // (e.target.checked === false) && setCheck(true);
       // // (e.target.checked === true) && setCheck(false);
-      (e.target.checked) && setIsOpen(true);
+      // (e.target.checked) && setIsOpen(true);
       // 
-      const check = e.target.checked;
+      if(e.target.checked) {
+        setIsOpen(true);
+      } else {
+        dispatch(eventStartUpdateProductPrice(activeList, Product))
+      }
       
-      dispatch( eventCheckProduct(activeList, Product, check));
+      dispatch( eventStartCheckProduct(activeList, Product, check));
       
+
+     
+
     
       // console.log(check);
     
@@ -119,6 +135,7 @@ console.log(_id)
                       modalIsOpen={modalIsOpen}
                       Product={Product}
                       setIsOpen={setIsOpen}
+                      checkId = {checkId}
             />      
     </div> 
     )

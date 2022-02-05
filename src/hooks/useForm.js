@@ -5,10 +5,12 @@ export const useForm = ( initialState = {} ) => {
     
     const [values, setValues] = useState(initialState);
 
-    const reset = (nameValue = '', amountValue = 1, Cost = '') => {
+
+    const reset = (nameValue = '', amountValue = 1 , Cost = '') => {
      
         setValues( {
             ...values,
+
             nameValue,
             amountValue,
             Cost
