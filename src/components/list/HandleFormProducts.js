@@ -17,7 +17,6 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
     const {activeList} = useSelector( state => state.shoppingListReducer );
     const { push, location} = useHistory()
     const [products, setProducts] = useState([])
-    const { nombre} = activeList;
     const  [inputValues, handleInputChange, reset] = useForm({
         title: '',
         nameValue: '',
@@ -27,9 +26,9 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
 
 
     useEffect(() => {
-         (location.pathname === "/list/newList")&&    
-         handleNewList(uid)
-    }, [])
+            (location.pathname === "/list/newList")&&    
+            handleNewList(uid)
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
 
     const handleNewItem = async() => {

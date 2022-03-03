@@ -1,4 +1,4 @@
-// import { useSelector } from "react-redux";
+
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -20,14 +20,10 @@ const fetchSinToken = ( endpoint, data, method = 'GET' ) => {
 }
 
 const fetchConToken = ( endpoint, data = false, method = 'GET' ) => {
- 
-    
-
 
     const url = `${ baseUrl }/${ endpoint }`;
     const token = localStorage.getItem('token') || '';
  
-
     if ( method === 'GET' ) {
         return fetch( url, {
             method,
@@ -37,13 +33,6 @@ const fetchConToken = ( endpoint, data = false, method = 'GET' ) => {
                 'list-id': data.list_id
             }
         });
-    // } if ( method === 'GET'  ) {
-    //     return fetch( url, {
-    //         method,
-    //         headers: {
-    //             'x-token': token,
-    //         }
-    //     });
     } else {
         return fetch( url, {
             method,

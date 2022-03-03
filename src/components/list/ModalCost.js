@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { eventStartCheckProduct, eventStartUpdateProductPrice, eventUpdateProductPrice } from '../../action/listEvents';
+import { eventStartCheckProduct, eventStartUpdateProductPrice} from '../../action/listEvents';
 import { useForm } from '../../hooks/useForm';
 
 

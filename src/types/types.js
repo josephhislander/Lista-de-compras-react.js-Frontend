@@ -5,23 +5,14 @@ export const types = {
     authLogout: '[auth] Logout',
     authCheckingFinish: '[auth] Finish checking login state',
 
-
-    eventStartNewList: '[event] Start New List',
     eventNewList: '[event] New List',
-    eventStartGetList: '[event] Start Get Lists',
     eventGetList: '[event] Get Lists',
-    // eventGetLists:'[event] Get Lists',
-    eventStartDeleteList: '[event] Start Delete Lists',
     eventDeleteList: '[event] Delete List',
-    eventStartUpdateList: '[event] Start Update Lists',
     eventUpdateList: '[event] Update List',
     eventNewActiveList: '[event] New Active List',
-    eventStartUpdateListBudge:'[event] Update Product Budge',
     eventUpdateListBudge: '[event] Update Product Budge',
 
-    eventStartNewProduct: '[event] Start New Product',
     eventNewProduct: '[event] New Product',
-    eventStartGetProducts: '[event] Start Get Products',
     eventGetProducts: '[event] Get Products',
     eventDeleteProduct: '[event] Delete Product',
     eventDeleteProducts: '[event] Delete Products',
@@ -31,6 +22,5 @@ export const types = {
 
     eventLogout: '[event] Logout',
 
-    
-
 }
+

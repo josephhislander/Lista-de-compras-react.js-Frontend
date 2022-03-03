@@ -11,7 +11,7 @@ export const Lists = () => {
     
     useEffect( () => {
          dispatch(eventStarGetList(uid,lists,activeList));
-    }, [dispatch])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <ul className="list-group p-3">

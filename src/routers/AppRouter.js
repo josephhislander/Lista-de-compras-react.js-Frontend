@@ -22,15 +22,7 @@ export const AppRouter = () => {
     const {checking, uid} = useSelector( state => state.auth );
 
     useEffect(() => {
-    
-        
-    
             dispatch( startChecking());
-            // dispatch(eventStarGetList(uid,lists,activeList));
-        
-    
-     
-      
     }, [dispatch])
 
 

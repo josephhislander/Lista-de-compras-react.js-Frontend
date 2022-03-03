@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
-import { eventCheckProduct, eventStartDeleteProducts, eventNewActiveProduct, eventStartDeleteProduct, eventStartCheckProduct, eventStartUpdateProductPrice } from '../../action/listEvents';
+import {  eventStartDeleteProduct, eventStartCheckProduct, eventStartUpdateProductPrice } from '../../action/listEvents';
 import { ModalCost } from './ModalCost';
 
 
@@ -11,21 +11,13 @@ import { ModalCost } from './ModalCost';
 export const ListItem = ({nombre, _id, products, cantidad, Product}) => {
 
     const [modalIsOpen, setIsOpen] = useState();
-    // const [check, setCheck] = useState(false);
+    
     const {activeList} = useSelector( state => state.shoppingListReducer);
     const dispatch = useDispatch()
     const {location} = useHistory();
-    // const {activeProduct} = activeList;
-    let {precio, impuesto} = Product;
+ 
 
     const checkId = `flexCheck${_id}`;
-    // useEffect(() => {
-
-    //     if(product.checked) 
-
-    // }, []);
-
-console.log(_id)
 
     const handleDeleteItem = () => { 
 

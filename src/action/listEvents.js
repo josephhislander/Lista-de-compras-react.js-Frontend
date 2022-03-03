@@ -17,7 +17,7 @@ moment().format();
             const resp = await fetchConToken('listas',data , 'POST');
             const body = await resp.json();
 
-            // console.log(body);
+            console.log(body);
 
             dispatch(eventNewList(body))
 
@@ -33,7 +33,7 @@ moment().format();
     }
 }
 
-const eventNewList = (body) => ({
+export const eventNewList = (body) => ({
     type: types.eventNewList,
     payload:  body.lista  
 })
@@ -58,7 +58,7 @@ export const eventStarGetList = (uid) => {
     }
 }
 
- const eventGetList = (listas) => ({
+ export const eventGetList = (listas) => ({
     type: types.eventGetList,
     payload: listas
 })
@@ -84,7 +84,7 @@ export const eventStartDeleteList = (id) => {
     }
 }
 
-const eventDeleteList = (id) => ({
+export const eventDeleteList = (id) => ({
     type: types.eventDeleteList,
     payload: id
 })
@@ -107,7 +107,7 @@ export const eventStartUpdateList = (activeList, activeTitle, productos) => {
     }
 }
 
-const eventUpdateList = (lista,productos) => ({
+export const eventUpdateList = (lista,productos) => ({
     
     type: types.eventUpdateList,
     payload:{ 
@@ -161,7 +161,7 @@ export const eventStartNewProduct = (name, activeList, amount) => {
     }
 }
 
-const eventNewProduct = (producto, activeList) => ({
+export const eventNewProduct = (producto, activeList) => ({
     type: types.eventNewProduct,
     payload: {
         activeList,
@@ -182,10 +182,10 @@ export const eventStartGetProducts = ( listas) => {
                 
                     const resp = await fetchConToken('productos',data, 'GET' );
                     const body = await resp.json();
-                    console.log(body.productos);
+                    // console.log(body.productos);
                     const productos = body.productos;
                     // return productos;
-                    console.log(productos);
+                    // console.log(productos);
                     dispatch(eventGetProducts(listas, productos))
                 } catch (error) {
                     console.log(error)
@@ -195,7 +195,7 @@ export const eventStartGetProducts = ( listas) => {
     } 
     
 
-const eventGetProducts = (activeList, productos) => ({
+export const eventGetProducts = (activeList, productos) => ({
     type: types.eventGetProducts,
     payload: {
         id: activeList._id,
@@ -239,7 +239,7 @@ export const eventStartDeleteProduct = ( productId, activeList) => {
 }
 
 
-const eventDeleteProduct = (productId, activeList) => ({
+export const eventDeleteProduct = (productId, activeList) => ({
     type: types.eventDeleteProduct,
     payload:  {
         id: activeList._id,
@@ -271,15 +271,6 @@ export const eventStartDeleteProducts = ({_id, usuario}) => {
     }
 }
 
-// const eventDeleteProducts = () => ({
-//     type: types.eventDeleteProduct,
-//     payload:  {
-//         id: activeList.id,
-//         list: {...activeList,
-//                     products: []  
-//                 }}
-// })
-
 export const eventNewActiveProduct = (activeList, Product) => ({
     type: types.eventNewActiveProduct,
     payload: {
@@ -290,7 +281,7 @@ export const eventNewActiveProduct = (activeList, Product) => ({
             }
 })
 
-const eventUpdateProductPrice = (activeList, Product, cost, itbms) => ({
+export const eventUpdateProductPrice = (activeList, Product, cost, itbms) => ({
     type: types.eventUpdateProductPrice,
     payload: {
         id: activeList._id,
@@ -301,12 +292,7 @@ const eventUpdateProductPrice = (activeList, Product, cost, itbms) => ({
                         impuesto: itbms
                     }
                     :product
-                    ),
-
-                    // activeProduct: {...Product,
-                    //     precio: cost,
-                    //     impuesto: itbms
-                    // }
+                    )
                 }}
 })
 
@@ -381,7 +367,7 @@ export const eventStartCheckProduct = (activeList,  Product, check = false) => {
 }
 
 
-const eventCheckProduct = (activeList, Product, check) => ({
+export const eventCheckProduct = (activeList, Product, check) => ({
     type: types.eventCheckProduct,
     payload: {
         id: activeList._id,
@@ -391,10 +377,7 @@ const eventCheckProduct = (activeList, Product, check) => ({
                         checked: check
                     }
                     :product
-                    ),
-                    // activeProduct: {...Product,
-                    //     checked: check
-                    // }
+                    )
                 }}
 })
 

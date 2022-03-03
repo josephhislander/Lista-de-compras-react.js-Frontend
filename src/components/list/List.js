@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch} from 'react-redux';
 import { useHistory } from 'react-router';
-import { eventNewActiveList, eventStartDeleteList, eventStartNewActivelist } from '../../action/listEvents';
+import {  eventStartDeleteList, eventStartNewActivelist } from '../../action/listEvents';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 

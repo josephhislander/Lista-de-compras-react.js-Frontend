@@ -8,11 +8,10 @@ import { ModalBudget } from './ModalBudget';
 
 export const UseList = () => {
 
-    const {title, productos , presupuesto:budget } = useSelector( state => state.shoppingListReducer.activeList );
     let totalCurrent = () => { return 0};
-    let remainingBudget = () => { return budget};
+    const {title, productos , presupuesto:budget } = useSelector( state => state.shoppingListReducer.activeList );
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [remaining, setremaining] = useState();
+    const [remaining, setremaining] = useState(budget);
     const [total, settotal] = useState(0);
     const {push} = useHistory()
     const Budget = parseFloat(budget).toFixed(2)
@@ -29,15 +28,43 @@ export const UseList = () => {
         
     }, [budget])
 
-    useEffect(() => {
-        handleBudgetAlert();
-    }, [remaining]);
     
 
     useEffect(() => {
-        settotal(totalCurrent())
+
+        let remainingBudget = () => { return budget};
+        settotal(totalCurrent());
+
+        remainingBudget =  () => {
+            const rest = (budget - totalCurrent() ).toFixed(2)
+            setremaining(rest);
+        }
+
         remainingBudget()
-    }, [productos, budget]);
+
+    }, [ settotal, productos, budget]);
+
+
+    useEffect(() => {
+        const handleBudgetAlert = () => {
+  
+            if ( (remaining > 0 && remaining < (budget / 10))) { 
+                Swal.fire({
+                    title: 'your budget is running out',
+                    icon: 'warning'
+                })
+            }
+     
+            if ( budget !== 0 && remaining < 0) {
+                Swal.fire({
+                    title: 'your budget ran out',
+                    icon: 'warning'
+                })
+            }
+        }
+
+        handleBudgetAlert();
+    }, [budget, remaining]);
 
         totalCurrent = () => {
 
@@ -54,27 +81,6 @@ export const UseList = () => {
                 return totalCurrent.toFixed(2);
             }
 
-        remainingBudget =  () => {
-           const rest = (budget - totalCurrent() ).toFixed(2)
-           setremaining(rest);
-    }
-
-    const handleBudgetAlert = () => {
-  
-        if ((budget !== 0 ) && (remaining !==0) && (remaining < (budget / 10))) { 
-            Swal.fire({
-                title: 'your budget is running out',
-                icon: 'warning'
-            })
-        }
- 
-        if ( budget !== 0 && remaining < 0) {
-            Swal.fire({
-                title: 'your budget ran out',
-                icon: 'warning'
-            })
-        }
-    }
 
     const handleBudget = ( ) => {
         setIsOpen(true);

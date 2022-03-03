@@ -50,7 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
     "redux-mock-store": "^1.5.4"

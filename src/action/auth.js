@@ -10,6 +10,7 @@ export const startLogin = ( correo, password) => {
         
         const resp = await fetchSinToken('auth/login', {correo, password}, 'POST');
         const body = await resp.json();
+        // console.log(body);
 
         if( body.ok) {
             localStorage.setItem('token', body.token);
@@ -48,7 +49,7 @@ export const startChecking = () => {
 
         const resp = await fetchConToken('auth/renew');
         const body = await resp.json();
-
+        // console.log(body);
  
 
         if( body.ok) {
@@ -84,6 +85,6 @@ export const startLogout = () => {
     }
 }
 
-const logout = () => ({
+export const logout = () => ({
     type: types.authLogout
 })
