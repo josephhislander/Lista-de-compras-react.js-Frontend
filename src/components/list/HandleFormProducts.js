@@ -73,13 +73,9 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
             push('/list')
         }
         
-
-
-        
     }
 
     const handleSave = ({target}) => {
-        
         target.focus();
 
         if(title === ''){
@@ -91,13 +87,6 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
 
         console.log(title);
         handleSubmit( activeList, title, uid,products);
-      
-        // Swal.fire(
-        //     'Save!',
-        //     'Your list has been created.',
-        //     'success'
-        //   )
-
     }
 
     const handleInputAmountFocus = () => {
@@ -111,28 +100,13 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
         } 
     }
 
-    // const handleInputTitleFocus = () => {
-    //     reset( '',  '','' , '')
-    // }
-
-    // const  handleInputTitleBlur = () => {
-    //     if ( title === '') {
-            
-    //         reset( '', '', '', nombre)
-    //     } 
-    // }
-
- 
-
     return (
-             <form className='m-2'>
+             <form className='m-2' autocomplete="off">
                     <div className='form-group '>
                         <input
                             className='form-control fs-4 border-success text-success'
                             name='title'
                             onChange={handleInputChange}
-                            // onBlur={handleInputTitleBlur}
-                            // onFocus={handleInputTitleFocus}
                             type='text'
                             placeholder= 'Title'
                             value={title}
@@ -143,8 +117,6 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
                         products={products}
                         setProducts={setProducts}
                     />
-
-                 
 
                     <div className='form-group mt-3 mr-3 d-inline-block input-w'>
                         <input

@@ -11,16 +11,12 @@ import { ModalCost } from './ModalCost';
 export const ListItem = ({nombre, _id, products, cantidad, Product}) => {
 
     const [modalIsOpen, setIsOpen] = useState();
-    
     const {activeList} = useSelector( state => state.shoppingListReducer);
     const dispatch = useDispatch()
     const {location} = useHistory();
- 
-
     const checkId = `flexCheck${_id}`;
 
     const handleDeleteItem = () => { 
-
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -31,15 +27,7 @@ export const ListItem = ({nombre, _id, products, cantidad, Product}) => {
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
-                console.log(activeList.usuario, _id)
-                // if(location.pathname === "/list/useList") {
-                    dispatch( eventStartDeleteProduct(_id, activeList ))
-                // }
-        
-                // setProducts(
-                //     products.filter( product => product.id !== id)
-                // )
-
+              dispatch( eventStartDeleteProduct(_id, activeList ))
               Swal.fire(
                 'Deleted!',
                 'Your product has been deleted.',
@@ -50,46 +38,20 @@ export const ListItem = ({nombre, _id, products, cantidad, Product}) => {
 
     }
 
-
-
-    const handleCheckChange =  (e) => {
-      // (Product.precio = 0)  && (Product.impuesto = 0)
-      // console.log(e.target)
-      // if( e.target.checked === true && precio === 0  &&  impuesto === 0) {
-        
-        
-      //   e.target.checked = false;
-      // }
-
+    const handleCheckChange =  async(e) => {
       const check = e.target.checked;
-      // setIsOpen(true);
-      
-      // dispatch( eventNewActiveProduct(activeList, Product));
-      
-      // (e.target.checked === false) && setCheck(true);
-      // // (e.target.checked === true) && setCheck(false);
-      // (e.target.checked) && setIsOpen(true);
-      // 
-      if(e.target.checked) {
+      if(check) {
         setIsOpen(true);
-      } else {
-        dispatch(eventStartUpdateProductPrice(activeList, Product))
+        dispatch( eventStartCheckProduct(activeList, Product, check));
+        console.log('check en true')
+      } 
+      
+      if(check === false){
+        await dispatch( eventStartCheckProduct(activeList, Product, check));
+        dispatch(eventStartUpdateProductPrice(activeList, Product));
+        console.log('check en false')
       }
-      
-      dispatch( eventStartCheckProduct(activeList, Product, check));
-      
-
-     
-
-    
-      // console.log(check);
-    
-   
     }
-
-   
-
-  
 
     const closeModal = () => {
       setIsOpen(false);

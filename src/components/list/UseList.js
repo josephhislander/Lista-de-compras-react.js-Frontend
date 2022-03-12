@@ -21,11 +21,8 @@ export const UseList = () => {
         push('./list')
     }
 
-
     useEffect(() => {
         (budget === 0) && setIsOpen(true);
-        
-        
     }, [budget])
 
     
@@ -99,10 +96,7 @@ export const UseList = () => {
                 </div>
                 
                 <div className='list-h'>
-                    <ListProducts 
-                        // products={productos}
-                        // setProducts={setProducts}
-                    />
+                    <ListProducts />
                 </div>
 
                 <div className='add-h'>
@@ -116,7 +110,7 @@ export const UseList = () => {
                                             onClick={handleBudget}></i>
                         <span className='fw-bold text-warning  float-end'> {'$' + Budget} </span></p>
                         <p className='m-0'>Remaining budget:  <span className='fw-bold text-danger float-end'> { '$' +  remaining}</span></p> 
-                        {/* ( remainingBudget === NaN) ? 0 :  */}
+
                         <p className='m-0'>Current total: <span className='fw-bold text-warning float-end'> { '$' + total } </span></p>
                     </div>
                 </div>

@@ -294,6 +294,7 @@ export const eventUpdateProductPrice = (activeList, Product, cost, itbms) => ({
                     :product
                     )
                 }}
+                
 })
 
 

@@ -34,41 +34,21 @@ export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product, checkId }
 
     const {Cost, itbms} = costValues;
     
-
-
     const handleCostInputFocus = () => {
       console.log('hola mundo')
       reset( Cost, '')
     }
 
     const handleSavePrice = () => {
-
-
-      // console.log(Cost, itbms)
-      //     closeModal()
-      //     setIsOpen(true)
-     
-
       dispatch(eventStartUpdateProductPrice(activeList, Product, Cost, itbms))
-
-
       closeModal()
-      
     }
 
     const handleBack = () => {
-
-      
-      
-
-     let checkBox = document.getElementById(checkId);
-      console.log(checkBox.checked);
-
+      let checkBox = document.getElementById(checkId);
       dispatch( eventStartCheckProduct(activeList, Product));
-      closeModal()
-
       checkBox.checked = false;
-
+      closeModal()
     }
 
     return (
@@ -147,7 +127,6 @@ export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product, checkId }
         <div className="footer d-flex justify-content-center">
             <button className='btn btn-success fs-1 mr-2'
             onClick={handleBack}
-            // id="cancelBtn"
            >
             Back
            </button>

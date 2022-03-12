@@ -12,22 +12,8 @@ import { HandleFormProducts } from './HandleFormProducts';
 export const NewList = () => {
 
     const { push } = useHistory()
-   //  const {uid} = useSelector( state => state.auth );
     const dispatch = useDispatch();
 
-    
-
-    // useEffect(() => {
-    //     dispatch(eventStartNewList( '',uid))
-    // })
-    // dispatch(eventStartNewList( '',uid));
-    // const handleSubmit = (title, products, uid, name) => {
-    //     dispatch(eventStartNewList({ title, 
-    //                                 products, 
-    //                                 user: {
-    //                                     uid:  uid ,
-    //                                     name: name
-    //                                 }}));
      const handleNewList = (uid) => {
         dispatch(eventStartNewList( 'noName',uid));
      }
@@ -38,13 +24,6 @@ export const NewList = () => {
         push("/list")
      }
        
-        // products.map(product => dispatch(eventStartNewProduct(product)))
-
-        // dispatch(eventStartNewProduct(products));  
-
-        
-    
-
     return (
        <>
             <HandleFormProducts 

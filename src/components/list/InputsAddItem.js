@@ -57,7 +57,8 @@ export const InputsAddItem = () => {
                             placeholder='Add product'
                             type='text'
                             value={nameValue}
-                            title='Add product'>
+                            title='Add product'
+                            autocomplete="off">
                         </input>
                     </div>
 
@@ -71,7 +72,8 @@ export const InputsAddItem = () => {
                             placeholder='Amount'
                             type='text'
                             value={amountValue}
-                            title='Add product'>
+                            title='Add product'
+                            autocomplete="off">
                         </input>
                     </div>
 
