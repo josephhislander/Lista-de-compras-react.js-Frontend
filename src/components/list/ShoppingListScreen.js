@@ -5,8 +5,6 @@ import { Navbar } from '../ui/Navbar';
 
 export const ShoppingListScreen = ({history}) => {
 
-
-    
     return (
         <div className="list-container">
             <div className="transparencia">

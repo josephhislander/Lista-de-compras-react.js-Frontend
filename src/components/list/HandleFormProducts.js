@@ -24,30 +24,23 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
     });
     const {nameValue, amountValue, title} = inputValues;
 
-
     useEffect(() => {
             (location.pathname === "/list/newList")&&    
             handleNewList(uid)
     }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
-
     const handleNewItem = async() => {
-
-        if( nameValue === '') {
+       if( nameValue === '') {
             return Swal.fire({
                 title: 'The product name cannot be empty',
                 icon: 'warning'
               })
         }
-      
         await dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
-
         reset();
-
     }
 
     const handleBack = () => {
-
         if(location.pathname === "/list/newList"){
               Swal.fire({
                 title: 'Are you sure?',
@@ -77,15 +70,12 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
 
     const handleSave = ({target}) => {
         target.focus();
-
         if(title === ''){
             return Swal.fire({
                 title: 'The title cannot be empty',
                 icon: 'warning'
               })
         }
-
-        console.log(title);
         handleSubmit( activeList, title, uid,products);
     }
 
@@ -173,7 +163,6 @@ export const HandleFormProducts = ({handleNewList = false, handleSubmit, activeT
 }
 
 HandleFormProducts.propTypes = {
-    // handleSubmit: PropTypes.func.isRequired,
     activeTitle: PropTypes.string,
     activeProducts: PropTypes.array
 }

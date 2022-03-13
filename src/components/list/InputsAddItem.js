@@ -28,23 +28,14 @@ export const InputsAddItem = () => {
     }
 
     const handleNewItem = async() => {
-
         if( nameValue === '') {
             return Swal.fire({
                 title: 'The product name cannot be empty',
                 icon: 'warning'
               })
         }
-
-        // console.log('hola mundo');
-        // console.log(nameValue, activeList._id,amount);
         await dispatch(eventStartNewProduct(nameValue, activeList,amountValue));
-
-
-        // dispatch( eventNewProduct(activeList, nameValue, amountValue))
-
         reset();
-
     }
 
     return (
@@ -82,8 +73,7 @@ export const InputsAddItem = () => {
                             type='button'
                             onClick={handleNewItem}
                             >
-                            <i className="bi bi-plus-lg text-light "></i>
-                            
+                            <i className="bi bi-plus-lg text-light "></i>                            
                     </button>
         </div>
     )

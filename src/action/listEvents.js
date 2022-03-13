@@ -4,8 +4,7 @@ import { fetchConToken } from "../helpers/fetch";
 import Swal from "sweetalert2";
 moment().format();
 
-    export const eventStartNewList = (title = 'noName', user) => {
-
+export const eventStartNewList = (title = 'noName', user) => {
     return async(dispatch) => {
         try {
             const data = {nombre: title,
@@ -16,11 +15,7 @@ moment().format();
         
             const resp = await fetchConToken('listas',data , 'POST');
             const body = await resp.json();
-
-            console.log(body);
-
             dispatch(eventNewList(body))
-
             Swal.fire(
             'Save!',
             'Your list has been created.',
@@ -28,7 +23,6 @@ moment().format();
           )
         } catch (error) {
             console.log(error + ' algo paso con el fetch')
-            // const resp2 = await fetchConToken('')
         }
     }
 }
@@ -41,7 +35,6 @@ export const eventNewList = (body) => ({
 export const eventStarGetList = (uid) => {
 
     return async(dispatch) => {
-
         try {  
             const data = {
                            uid
@@ -50,8 +43,7 @@ export const eventStarGetList = (uid) => {
             const resp = await fetchConToken('listas',data, 'GET' );
             const body = await resp.json();
             const listas = body.listas;
-            dispatch(eventGetList(listas));
-            
+            dispatch(eventGetList(listas));           
         } catch (error) {
             console.log(error)
         }
@@ -66,7 +58,6 @@ export const eventStarGetList = (uid) => {
 
 export const eventStartDeleteList = (id) => {
     return async ( dispatch, getState ) => {
-
         const { uid} = getState().auth;
         try {
             const resp = await fetchConToken(`listas/${ id }`, {"uid": uid}, 'DELETE' );
@@ -90,16 +81,12 @@ export const eventDeleteList = (id) => ({
 })
 
 
-export const eventStartUpdateList = (activeList, activeTitle, productos) => {
-  
+export const eventStartUpdateList = (activeList, activeTitle, productos) => {  
     const data = {nombre: activeTitle, uid: activeList.usuario, presupuesto : 0};
-
     return async(dispatch) => {
         try {
             const resp = await fetchConToken(`listas/${activeList._id}`, data, 'PUT')
             const body = await resp.json();
-
-            console.log(body);
             dispatch(eventUpdateList(body.lista, productos))
         } catch (error) {
             console.log(error)
@@ -107,8 +94,7 @@ export const eventStartUpdateList = (activeList, activeTitle, productos) => {
     }
 }
 
-export const eventUpdateList = (lista,productos) => ({
-    
+export const eventUpdateList = (lista,productos) => ({    
     type: types.eventUpdateList,
     payload:{ 
         id: lista._id,
@@ -124,10 +110,9 @@ export const eventStartNewActivelist = (lista) => {
     return async(dispatch) => {
         try {
             dispatch(eventNewActiveList(lista))
-            const productos = await dispatch(eventStartGetProducts(lista))
-            console.log(productos)
+           await dispatch(eventStartGetProducts(lista))
         } catch (error) {
-            
+            console.log(error);
         }
     }
 
@@ -138,17 +123,13 @@ export const eventNewActiveList = ( list) => ({
     payload: list
 })
 
-
 export const eventStartNewProduct = (name, activeList, amount) => {
-
     const data = {  
         nombre: name,
         cantidad: amount,
         lista: activeList
         };
-
     return async(dispatch) => {
-
         try {
             const resp = await fetchConToken('productos',data , 'POST');
             const body = await resp.json();
@@ -156,7 +137,6 @@ export const eventStartNewProduct = (name, activeList, amount) => {
             dispatch(eventNewProduct(producto, activeList))
         } catch (error) {
             console.log(error)
-            // const resp2 = await fetchConToken('')
         }
     }
 }
@@ -170,7 +150,6 @@ export const eventNewProduct = (producto, activeList) => ({
 })
 
 export const eventStartGetProducts = ( listas) => {
-
     return async(dispatch) => { 
                                 try {
             
@@ -178,14 +157,10 @@ export const eventStartGetProducts = ( listas) => {
                         'uid': listas.usuario,
                         'list_id': listas._id,
                         
-                    };
-                
+                    };               
                     const resp = await fetchConToken('productos',data, 'GET' );
                     const body = await resp.json();
-                    // console.log(body.productos);
                     const productos = body.productos;
-                    // return productos;
-                    // console.log(productos);
                     dispatch(eventGetProducts(listas, productos))
                 } catch (error) {
                     console.log(error)
@@ -207,37 +182,21 @@ export const eventGetProducts = (activeList, productos) => ({
 
 
 export const eventStartDeleteProduct = ( productId, activeList) => {
-   
-
-    console.log(activeList, productId)
     const data = {
         'uid': activeList.usuario,
         'product_id': productId, 
     }
-
     return async(dispatch) => {
-       
-        
             try {
                 const resp = await fetchConToken(`productos/product`, data, 'DELETE' );
                 const body = await resp.json();
-                console.log(body);
-                // if ( body.msg === 'Eliminados') {
-                //     console.log('Eliminados')
-                //     // dispatch( eventNewActiveList(body))
                     dispatch( eventDeleteProduct(productId, activeList) );
-
-                // } else {
-                //     Swal.fire({icon:'error', title: body.msg, text:'error  Test'});
-                // }
-
         } catch (error) {
             console.log(error)
         }
     }
     
 }
-
 
 export const eventDeleteProduct = (productId, activeList) => ({
     type: types.eventDeleteProduct,
@@ -251,20 +210,14 @@ export const eventDeleteProduct = (productId, activeList) => ({
 
 
 export const eventStartDeleteProducts = ({_id, usuario}) => {
-
-    console.log(_id, usuario)
     const data = {
         'uid': usuario,
         'list_id': _id, 
     }
-
-    return async(dispatch) => {
-       
-        
-            try {
+    return async() => {
+        try {
                 const resp = await fetchConToken(`productos`, data, 'DELETE' );
                 const body = await resp.json();
-                console.log(body);
         } catch (error) {
             console.log(error)
         }
@@ -299,15 +252,11 @@ export const eventUpdateProductPrice = (activeList, Product, cost, itbms) => ({
 
 
 export const eventStartUpdateProductPrice = (activeList, Product, cost =0, itbms= 0) => {
-
     const data = { uid: activeList.usuario, precio: cost, impuesto: itbms};
-
     return async(dispatch) => {
         try {
             const resp = await fetchConToken(`productos/${Product._id}`, data, 'PUT')
             const body = await resp.json();
-
-            console.log(body);
             dispatch(eventUpdateProductPrice(activeList, Product, cost, itbms  ))
         } catch (error) {
             console.log(error)
@@ -317,19 +266,12 @@ export const eventStartUpdateProductPrice = (activeList, Product, cost =0, itbms
 
 
 export const eventStartUpdateListBudge = (activeList, Budget) => {
-    
-    
     const data = {presupuesto: Budget, uid: activeList.usuario, nombre: activeList.nombre};
-    console.log(data);
     return async(dispatch) => {
         try {
             const resp = await fetchConToken(`listas/${activeList._id}`, data, 'PUT')
-
             const body = await resp.json();
-            console.log(body);
-
             dispatch(eventUpdateListBudge(activeList, Budget));
-
         } catch (error) {
             console.log(error)
         }
@@ -350,16 +292,11 @@ export const eventUpdateListBudge = (activeList, Budget) => ({
 
 
 export const eventStartCheckProduct = (activeList,  Product, check = false) => {
-
-
     const data = { uid: activeList.usuario, checked: check};
-
     return async(dispatch) => {
         try {
             const resp = await fetchConToken(`productos/${Product._id}`, data, 'PUT')
             const body = await resp.json();
-
-            console.log(body);
             dispatch(eventCheckProduct(activeList, Product, check   ))
         } catch (error) {
             console.log(error)

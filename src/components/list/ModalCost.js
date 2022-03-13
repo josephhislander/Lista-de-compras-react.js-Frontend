@@ -74,7 +74,7 @@ export const ModalCost = ({modalIsOpen,setIsOpen, closeModal, Product, checkId }
                         placeholder='$'
                         type='text'
                         value={Cost}
-
+                        autocomplete="off"
                         />
                 </div>
           </div>

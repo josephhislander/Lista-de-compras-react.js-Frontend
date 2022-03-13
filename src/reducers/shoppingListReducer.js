@@ -1,11 +1,9 @@
 import { types } from "../types/types";
 
-
 const initialState = {
     lists: [],
     activeList: {}
 }
-
 
 export const shoppingListReducer = ( state = initialState, action) => {
 
@@ -54,7 +52,6 @@ export const shoppingListReducer = ( state = initialState, action) => {
                     ...action.payload
                 }
             }
-
         
         case types.eventUpdateListBudge:
             return {
@@ -66,7 +63,6 @@ export const shoppingListReducer = ( state = initialState, action) => {
                 ),
                 activeList: action.payload.list
             }
-
 
         case types.eventNewProduct:
             return {

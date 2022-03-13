@@ -61,7 +61,7 @@ export const ModalBudget = ({modalIsOpen, setIsOpen}) => {
                           placeholder='$'
                           type='text'
                           value={Budget}
-  
+                          autocomplete="off"
                           />
                   </div>
             </div>

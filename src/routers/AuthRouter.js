@@ -10,31 +10,23 @@ import { LoginWithGoogle } from '../components/auth/LoginWithGoogle'
 import { RegisterPlace } from '../components/auth/RegisterPlace'
 
 export const AuthRouter = () => {
-    return (
-       
+    return (       
             <div>
                 <Switch>
                     <Route 
                         path='/auth/login'
                         component={LoginPlace}
                     />
-
                     <Route 
                         path='/auth/loginG'
                         component={LoginWithGoogle}
                     />
-
                     <Route 
                         path='/auth/register'
                         component={RegisterPlace}
                     />
-                
                     <Redirect to='/auth/login' />
-
                 </Switch>
-            </div>
-       
-                
-        
+            </div> 
     )
 }

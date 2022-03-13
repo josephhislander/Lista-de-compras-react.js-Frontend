@@ -11,10 +11,8 @@ import { UpdateList } from '../components/list/UpdateList';
 
 export const ListRouter = () => {
     
-
     return(
 
-     
         <div >
             <Switch>
                 <Route 

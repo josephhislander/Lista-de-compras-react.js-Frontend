@@ -97,7 +97,6 @@ export const ListItem = ({nombre, _id, products, cantidad, Product}) => {
 
 ListItem.propTypes = {
     nombre: PropTypes.string.isRequired,
-    // id: PropTypes.any.isRequired,
     products: PropTypes.array.isRequired,
 }
 

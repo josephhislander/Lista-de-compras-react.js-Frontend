@@ -21,6 +21,5 @@ export const types = {
     eventCheckProduct: '[event] Check Product',
 
     eventLogout: '[event] Logout',
-
 }
 

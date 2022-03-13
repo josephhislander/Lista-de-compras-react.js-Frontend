@@ -1,12 +1,8 @@
-
 import { useHistory } from 'react-router';
-// import { useDispatch, useSelector } from 'react-redux';
 import { useDispatch} from 'react-redux';
-// import {  eventNewList, eventStartNewList, eventStartNewProduct } from '../../action/listEvents';
 import {eventStartNewList, eventStartUpdateList} from '../../action/listEvents';
-
 import { HandleFormProducts } from './HandleFormProducts';
-// import { useEffect } from 'react';
+
 
 
 export const NewList = () => {

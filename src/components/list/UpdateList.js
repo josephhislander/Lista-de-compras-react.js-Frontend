@@ -5,24 +5,10 @@ import { eventStartUpdateList} from '../../action/listEvents';
 import { HandleFormProducts } from './HandleFormProducts';
 
 export const UpdateList = () => {
-
     const {activeList} = useSelector( state => state.shoppingListReducer);
     const dispatch = useDispatch();
     const { push } = useHistory()
-    
-    
-    // useEffect(() => {
-        
-        
-        
-    // },[])
-    
-    // const  Getproductos = dispatch(eventStartGetProducts(activeList ));
-
     const { nombre: activeTitle, productos } = activeList;
-//  console.log(Getproductos);
-    
-
     const handleSubmit = (activeList, title, products) => {
         dispatch(eventStartUpdateList(activeList, title, products));
         push("/list")

@@ -12,7 +12,6 @@ export const LoginWithGoogle = () => {
       console.log('Failure')
   }
 
-
   function handleCredentialResponse(response) {
     const body = { id_token: response.tokenId };
 
