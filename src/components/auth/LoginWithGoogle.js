@@ -3,17 +3,20 @@ import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import { login } from "../../action/auth";
 
+
 export const LoginWithGoogle = () => {
+  const baseUrl = process.env.REACT_APP_API_URL;
   const dispatch = useDispatch();
 
   const failure = () => {
       console.log('Failure')
   }
 
+
   function handleCredentialResponse(response) {
     const body = { id_token: response.tokenId };
 
-    fetch("http://localhost:8080/api/auth/google", {
+    fetch( baseUrl+"/auth/google", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
