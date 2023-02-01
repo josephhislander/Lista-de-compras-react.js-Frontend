@@ -8,7 +8,7 @@ export const ShoppingListScreen = ({history}) => {
     return (
         <div className="list-container">
             <div className="transparencia">
-                <Navbar />
+                <Navbar className='nav' />
                 <div className="list-router-container">
                     <ListRouter/>
                 </div>
